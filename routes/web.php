@@ -15,9 +15,13 @@
 //    return view('welcome');
 //});
 
-Route::get('/', function () {
-    return view('blog/home');
-});
+//Route::get('/', function () {
+//    return view('blog/home');
+//});
+
+Route::get('/', 'PostController@publicHomePage');
+
+Route::resource('posts', 'PostController');
 
 Auth::routes();
 

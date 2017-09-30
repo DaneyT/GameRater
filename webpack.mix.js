@@ -16,4 +16,4 @@ mix.js('resources/assets/js/app.js', 'public/js')
 
 mix.scripts([
     'resources/assets/js/jquery.js',
-    'resources/assets/js/popper.js']);
+    'resources/assets/js/popper.min.js']);
