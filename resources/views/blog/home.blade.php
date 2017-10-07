@@ -15,6 +15,8 @@
                 <div class="well well-lg">
                     <h3>{{ $post->title }}</h3>
                     <p>{{ $post->body }}</p>
+                    <a href="{{ route('posts.show', ['id' => $post->id]) }}" class="btn ntn-default pull-right">View Post</a>
+                    $nbspc
                 </div>
 
                 @endforeach
