@@ -48,8 +48,14 @@
             <th>{{$post->id}}</th>
             <td>{{$post->title}}</td>
             <td>{{$post->body}}</td>
-            <td>eddit button</td>
-            <td>delete button</td>
+            <td><a href="{{ route('posts.edit', ['id'=>$post->id]) }}" class="btn btn-info">Edit</a></td>
+            <td>
+                <form action="{{ route('posts.destroy', ['id' => $post->id]) }}" method="post">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
+            </td>
         </tr>
         @endforeach
         </tbody>

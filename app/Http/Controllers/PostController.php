@@ -85,7 +85,8 @@ class PostController extends Controller
      */
     public function edit(post $post)
     {
-        //
+        $postInfo = Post::find($post);
+        return view('adminPanel.edit', ['post'=>$postInfo]);
     }
 
     /**
@@ -97,7 +98,34 @@ class PostController extends Controller
      */
     public function update(Request $request, post $post)
     {
-        //
+        $postInfo = Post::where('id', $request->id)->first();
+
+        if(isset($request->title))
+        {
+            $postInfo->title = $request->title;
+
+        }
+
+        if(isset($request->body))
+        {
+            $postInfo->body = $request->body;
+        }
+        if(isset($request->id))
+        {
+            $postInfo->id = $request->id;
+        }
+
+        $postInfo->save();
+
+        if(isset($request->editForm))
+        {
+            return redirect()->route('posts.index');
+        }
+        else
+        {
+            return redirect()->route('posts.show', ['id' => $post]);
+        }
+
     }
 
     /**
@@ -108,6 +136,9 @@ class PostController extends Controller
      */
     public function destroy(post $post)
     {
-        //
+        $postInfo = Post::where('id', $post->id)->first();
+        $postInfo->delete();
+
+        return redirect()->route('posts.index');
     }
 }
