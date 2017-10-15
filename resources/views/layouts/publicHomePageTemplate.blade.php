@@ -47,7 +47,8 @@ minimum-scale=1.0">
 
 
     <div>
-        <h1>Welcome to the Blog</h1>
+        <h1>Welcome on GameReviewer!</h1>
+        <h2>Please login to join the discussion on games!</h2>
     </div>
 
 
@@ -81,7 +82,7 @@ minimum-scale=1.0">
         @yield('content')
 
         <div class="footer text-center" style="margin: 20px 0 60px 0;">
-            <p>@copy; Begin Programming</p>
+            <p>@copy; Daney Timmers</p>
         </div>
     </div>
 
