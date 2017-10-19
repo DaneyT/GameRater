@@ -71,6 +71,8 @@ minimum-scale=1.0">
             @if(Auth::check())
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ route('posts.index') }}">Manage blogpost</a></li>
+                    <li><a href="{{ route('view_comments') }}">View comments</a></li>
+
                 </ul>
             @endif
         </div>

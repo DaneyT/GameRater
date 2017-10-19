@@ -23,6 +23,15 @@ Route::get('/', 'PostController@publicHomePage');
 
 Route::resource('posts', 'PostController');
 
+
+Route::resource('comments', 'CommentController');
+
+//Route::get('/', 'CommentController@allComments');  //THIS WORKS!!
+
+Route::get('blog/view_comments', 'CommentController@allComments')->name('view_comments');
+
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

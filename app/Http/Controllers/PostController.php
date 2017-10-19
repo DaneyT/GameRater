@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\post;
+use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,14 +69,34 @@ class PostController extends Controller
      */
     public function show(post $post)
     {
+//        $first = DB::table('posts')
+//            ->find($post);
+//
+//        $data = DB::table('comments')
+//            ->all()
+//            ->union($first)
+//            ->get();
+
+
+
         $postdata = post::find($post);
+        //$commentsdata = Comment::get();
+        $commentsdata = Comment::all()->where('postID', $post->id);
+//
         $data = array(
             'id' => $post,
             'post' => $postdata
         );
 
-        return view('blog.view_post', $data);
+        $commentData = array(
+            'comments' => $commentsdata
+        );
+
+
+
+        return view('blog.view_post')->with($data)->with($commentData);
     }
+
 
     /**
      * Show the form for editing the specified resource.
