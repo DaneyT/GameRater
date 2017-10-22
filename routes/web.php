@@ -7,43 +7,36 @@
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| contains the "web" middleware group.
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Auth::routes();
 
-//Route::get('/', function () {
-//    return view('blog/home');
-//});
+//User routes
+Route::resource('users', 'Auth\UserManagerController');
+
+Route::get('adminPanel/showUsers', 'Auth\UserManagerController@index')->name('showUsers');
+
+//Posts routes
 
 Route::get('/', 'PostController@publicHomePage');
 
 Route::resource('posts', 'PostController');
 
+Route::get('blog/view_gamesFromGenre/{labelGenre}', 'PostController@showGamesPosts')->name('view_gamesFromGenre');
+
+Route::get('blog/searchPosts', 'PostController@searchPosts')->name('searchPosts');
+
+
+//Comment routes
 
 Route::resource('comments', 'CommentController');
 
-//Route::get('/', 'CommentController@allComments');  //THIS WORKS!!
-
 Route::get('blog/view_comments', 'CommentController@allComments')->name('view_comments');
 
-
-
-Auth::routes();
+Route::get('blog/gameList', 'CommentController@viewAllGames')->name('gameList');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Auth::routes();
-//
-//Route::get('/home', 'HomeController@index')->name('home');
-//
-//Auth::routes();
-//
-//Route::get('/home', 'HomeController@index')->name('home');
-//
-//Auth::routes();
-//
-//Route::get('/home', 'HomeController@index')->name('home');
+

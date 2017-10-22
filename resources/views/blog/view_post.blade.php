@@ -11,6 +11,7 @@
 
 <h1>{{ $post[0]->title }}</h1>
     <p>{{ $post[0]-> body }}</p>
+    <p> {{ $post[0]-> labelGenre }}</p>
     <p>Created at: {{ $post[0] -> created_at }}</p>
 
     @guest

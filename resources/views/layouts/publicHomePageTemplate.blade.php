@@ -61,10 +61,10 @@ minimum-scale=1.0">
 
 
                 <ul>
-                    <li><a href="">Top 10 most Recent Posts</a></li>
-                    <li><a href="">Top 10 Liked posts</a></li>
-                    <li><a href="">Top 10 Most Commented Posts</a></li>
-                    <li><a href="">Top 10 Most Visited Posts</a></li>
+                    <li><a href="">10 most recent News Posts</a></li>
+                    <li><a href="{{route('gameList')}}">Game discussion</a></li>
+                    {{--<li><a href="">Top 10 Most Commented Posts</a></li>--}}
+                    {{--<li><a href="">Top 10 Most Visited Posts</a></li>--}}
 
                 </ul>
             </ul>

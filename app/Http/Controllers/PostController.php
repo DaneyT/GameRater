@@ -12,7 +12,7 @@ class PostController extends Controller
 
     public function publicHomePage()
     {
-        $posts = Post::paginate(10);
+        $posts = Post::where('labelGenre', "news")->paginate(10);
         return view('blog/home', ['posts'=>$posts]);
     }
     /**
@@ -22,8 +22,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $loggedInUserId = Auth::id();
-        $posts = post::all()->where('user_id', $loggedInUserId);
+        //$loggedInUserId = Auth::id();
+        //$posts = post::all()->where('user_id', $loggedInUserId);
+        $posts = post::all()->where('labelGenre', "news");
+
 
         return view('adminPanel/home', ['posts' =>$posts]);
     }
@@ -50,11 +52,13 @@ class PostController extends Controller
 
         $postTitle = $request->title;
         $postBody =  $request->body;
+        $postlabelGenre = $request->labelGenre;
         $postUserId = Auth::id();
 
         $posts->user_id = $postUserId;
         $posts->title = $postTitle;
         $posts->body = $postBody;
+        $posts->labelGenre = $postlabelGenre;
 
         $posts->save();
 
@@ -69,20 +73,9 @@ class PostController extends Controller
      */
     public function show(post $post)
     {
-//        $first = DB::table('posts')
-//            ->find($post);
-//
-//        $data = DB::table('comments')
-//            ->all()
-//            ->union($first)
-//            ->get();
-
-
-
         $postdata = post::find($post);
-        //$commentsdata = Comment::get();
         $commentsdata = Comment::all()->where('postID', $post->id);
-//
+
         $data = array(
             'id' => $post,
             'post' => $postdata
@@ -92,9 +85,45 @@ class PostController extends Controller
             'comments' => $commentsdata
         );
 
-
-
         return view('blog.view_post')->with($data)->with($commentData);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function showGamesPosts($labelGenre)
+    {
+
+        $labelGenreString = $labelGenre;
+        //return $labelGenreString;
+        $postdata = post::all()->where('labelGenre', $labelGenreString);
+        //$commentsdata = Comment::all()->where('postID', $postdata->id);
+
+        $data = array(
+            //'id' => $postdata,
+            'post' => $postdata
+        );
+
+//        $commentData = array(
+//            'comments' => $commentsdata
+//        );
+
+        return view('blog.view_gamesFromGenre')->with($data);//->with($commentData);
+    }
+
+    public function searchPosts(Request $request)
+    {
+        //$search = \Request::get('search'); //<-- we use global request to get the param of URI
+        $search = $request->search;
+        //return $request->search;
+        $posts = post::where('title','like','%'.$search.'%')
+            ->orderBy('title')
+            ->paginate(10);
+
+        return view('blog.searchPosts',compact('posts'));
     }
 
 
@@ -130,6 +159,10 @@ class PostController extends Controller
         if(isset($request->body))
         {
             $postInfo->body = $request->body;
+        }
+        if(isset($request->labelGenre))
+        {
+            $postInfo->labelGenre = $request->labelGenre;
         }
         if(isset($request->id))
         {

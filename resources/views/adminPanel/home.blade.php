@@ -28,6 +28,7 @@
     </div>
 
     <h1>Admin Panel</h1>
+    <a href="{{ route('showUsers') }}" class="btn btn-primary pull-right">View all Users</a>
 
     <a href="{{ route('posts.create') }}" class="btn btn-primary pull-right">Add new blog post</a>
 
@@ -37,6 +38,7 @@
         <thead>
         <th>id</th>
         <th>title</th>
+        <th>genre</th>
         <th>body</th>
         <th>edit</th>
         <th>delete</th>
@@ -47,6 +49,7 @@
         <tr>
             <th>{{$post->id}}</th>
             <td>{{$post->title}}</td>
+            <td> {{$post->labelGenre}}</td>
             <td>{{$post->body}}</td>
             <td><a href="{{ route('posts.edit', ['id'=>$post->id]) }}" class="btn btn-info">Edit</a></td>
             <td>

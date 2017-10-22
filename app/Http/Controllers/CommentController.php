@@ -40,6 +40,14 @@ class CommentController extends Controller
 
         return view('blog.view_comments', ['comments' =>$comments]);
     }
+
+    public function viewAllGames()
+    {
+        //$loggedInUserName = Auth::user()->name;
+        $comments = Comment::all();
+
+        return view('blog.gameList', ['comments' =>$comments]);
+    }
 //
 //    /**
 //     * Show the form for creating a new resource.
