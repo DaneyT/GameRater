@@ -5,6 +5,7 @@
 @section('content')
 
 
+    <a href="{{route ('publicHomePage')}}" class="btn btn-primary pull-right">Back to Home</a>
 
     {{--container for containing top 10 posts in specified Post categories--}}
     <div>

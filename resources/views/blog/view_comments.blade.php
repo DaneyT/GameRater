@@ -28,6 +28,7 @@
     </div>
 
     <h1>Your placed comments:</h1>
+    <a href="{{route ('publicHomePage')}}" class="btn btn-primary pull-left">Back to Home</a>
 
     <br>
 

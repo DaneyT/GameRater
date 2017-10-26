@@ -28,6 +28,7 @@
     </div>
 
     <h1>User overview</h1>
+    <a href="{{route ('publicHomePage')}}" class="btn btn-primary pull-left">Back to Home</a>
 
     <br><br><br>
 

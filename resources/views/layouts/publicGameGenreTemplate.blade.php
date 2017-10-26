@@ -63,7 +63,7 @@ minimum-scale=1.0">
                     <ul>
                         <li><a href="{{ route('view_gamesFromGenre', ['labelGenre' => 'rpg']) }}">RPG games</a></li>
                         <li><a href="{{ route('view_gamesFromGenre', ['labelGenre' => 'strategy']) }}">Strategy games</a></li>
-                        <li><a href="{{ route('view_gamesFromGenre', ['labelGenre' => 'fps']) }}">First person shooter games</a></li>
+                        <li><a href="{{ route('view_gamesFromGenre', ['labelGenre' => 'firstpersonshooter']) }}">First person shooter games</a></li>
 
                     </ul>
                 </ul>

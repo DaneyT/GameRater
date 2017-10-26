@@ -26,14 +26,18 @@ class UserManagerController extends Controller
      */
     public function destroy(User $user)
     {
-        $userInfo = User::where('id', $user->id)->first();
+
+        $userInfo = User::find($user->id);
         $userInfo->delete();
 
-//        $userComments = Comment::all()->where('userName', $user->name);
-//        if(isset($userComments))
-//        {
-//            $userComments->delete();
-//        }
+        $userComments = Comment::where('userName', $user->name)->get();
+
+
+        foreach($userComments as $userComment)
+        {
+            //dd($userComment);
+            $userComment->delete();
+        }
 
 
         return redirect()->route('showUsers');

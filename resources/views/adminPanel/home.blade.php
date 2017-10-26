@@ -28,6 +28,8 @@
     </div>
 
     <h1>Admin Panel</h1>
+    <a href="{{route ('publicHomePage')}}" class="btn btn-primary pull-left">Back to Home</a>
+
     <a href="{{ route('showUsers') }}" class="btn btn-primary pull-right">View all Users</a>
 
     <a href="{{ route('posts.create') }}" class="btn btn-primary pull-right">Add new blog post</a>
@@ -51,6 +53,11 @@
             <td>{{$post->title}}</td>
             <td> {{$post->labelGenre}}</td>
             <td>{{$post->body}}</td>
+
+            <td><a href="{{ route('switchStatusPost', ['id'=>$post->id]) }}" class="btn {{$post->postActive ? 'btn-success' : 'btn-warning'}}">
+                    {{$post->postActive ? 'Actief' : 'Inactief'}}
+                </a></td>
+
             <td><a href="{{ route('posts.edit', ['id'=>$post->id]) }}" class="btn btn-info">Edit</a></td>
             <td>
                 <form action="{{ route('posts.destroy', ['id' => $post->id]) }}" method="post">

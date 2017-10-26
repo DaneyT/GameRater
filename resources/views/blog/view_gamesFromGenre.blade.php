@@ -8,6 +8,8 @@
 
     {{--container for containing top 10 posts in specified Post categories--}}
     <div>
+        <a href="{{route ('publicHomePage')}}" class="btn btn-primary pull-right">Back to Home</a>
+
         <h2>Games from this genre</h2>
 
         @foreach($post as $posts)

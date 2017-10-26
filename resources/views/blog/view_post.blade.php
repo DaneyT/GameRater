@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row">
-        <a href="http://localhost:8000/">Go back to Home</a>
+        <a href="{{route ('publicHomePage')}}" class="btn btn-primary pull-left">Back to Home</a>
          </div>
 
 

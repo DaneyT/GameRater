@@ -5,7 +5,6 @@
     @section('content')
 
 
-        {{--{!! Form::open(['method'=>'GET','url'=>'searchPosts','class'=>'navbar-form navbar-left','role'=>'search'])  !!}--}}
 
         <form action=" {{route('searchPosts')}}" method="GET" class="navbar-form navbar-left">
 
@@ -19,12 +18,11 @@
         </button>
         </span>
         </div>
-        {{--{!! Form::close() !!}--}}
         </form>
 
         {{--container for containing top 10 posts in specified Post categories--}}
         <div>
-            <h2>Top 10 Most recent blogs</h2>
+            <h2>10 Latest news posts</h2>
 
             @foreach($posts as $post)
 
