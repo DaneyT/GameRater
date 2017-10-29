@@ -12,12 +12,14 @@ class PostController extends Controller
 
     public function publicHomePage()
     {
-//        $posts = Post::where('labelGenre', "news")->where('postActive', "1")->paginate(10);
-//        return view('blog/home', ['posts'=>$posts]);
+        $posts = Post::with('postID')->where('labelGenre', 'like', 'news')->where('postActive', 'like', '1')->paginate(10);
 
-        $posts = Post::with(['postID' => function ($query) {
-            $query->where('labelGenre', 'like', '%news%')->where('postActive', 'like', '1');
-        }])->paginate(10);
+        foreach ($posts as $post)
+        {
+            $commentCount = Comment::with('postID')->where('postID', 'like', $post->id)->count();
+            $post['comment'] = $commentCount;
+        }
+
         return view('blog/home', ['posts'=>$posts]);
 
     }
@@ -28,17 +30,15 @@ class PostController extends Controller
      */
     public function index() //show only active news posts
     {
-        //$loggedInUserId = Auth::id();
         if(\Auth::user()->admin) {
-            //$posts = post::all()->where('user_id', $loggedInUserId);
-            $posts = post::all()->where('labelGenre', "news");
+            $posts = post::all(); //->where('labelGenre', "news");
 
 
             return view('adminPanel/home', ['posts' => $posts]);
         }
         else
         {
-            return redirect('home');
+            return redirect()->route('publicHomePage');
         }
     }
 
@@ -86,7 +86,10 @@ class PostController extends Controller
     public function show(post $post)
     {
         $postdata = post::find($post);
+
+
         $commentsdata = Comment::all()->where('postID', $post->id);
+
 
         $data = array(
             'id' => $post,
@@ -106,33 +109,39 @@ class PostController extends Controller
      * @param  \App\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function showGamesPosts($labelGenre)
+    public function showGamesPosts(Request $request)
     {
 
-        $labelGenreString = $labelGenre;
-        //return $labelGenreString;
-        $postdata = post::all()->where('labelGenre', $labelGenreString);
-        //$commentsdata = Comment::all()->where('postID', $postdata->id);
+        $labelGenreString = $request->labelGenre;
+
+        $postdata = Post::with('postID')->where('labelGenre', 'like', $labelGenreString)->where('postActive', 'like', '1')->paginate(10);
+
+
+
+        foreach ($postdata as $index=>$post)
+        {
+            //dd($postdata[$index]->id);
+            $commentCount = Comment::with('postID')->where('postID', 'like', $postdata[$index]->id)->count();
+            $post['comment'] = $commentCount;
+
+        }
+
 
         $data = array(
             //'id' => $postdata,
             'post' => $postdata
         );
 
-//        $commentData = array(
-//            'comments' => $commentsdata
-//        );
 
         return view('blog.view_gamesFromGenre')->with($data);//->with($commentData);
     }
 
-    public function switchStatusPost(post $post)
+    public function switchStatusPost(Request $request)
     {
-        $postInfo = Post::where('id', $post->id)->first();
+        $postInfo = Post::where('id', $request->id)->first();
 
-        //dd($postInfo);
         $singlePost = $postInfo;
-        if($post->postActive == 1)
+        if($request->postActive == 1)
         {
             $singlePost->postActive =0;
         }
@@ -141,7 +150,6 @@ class PostController extends Controller
             $singlePost->postActive =1;
         }
         //$singlePost->postActive = $postToggle;
-        //dd($singlePost);
         $singlePost->save();
 
 
@@ -150,7 +158,6 @@ class PostController extends Controller
 
     public function searchPosts(Request $request)
     {
-        //$search = \Request::get('search'); //<-- we use global request to get the param of URI
         $search = $request->search;
         //return $request->search;
         $posts = post::where('title','like','%'.$search.'%')                //this is the search para command
@@ -190,26 +197,6 @@ class PostController extends Controller
 
         $postInfo = Post::where('id', $request->id)->first();
 
-
-//        if(isset($request->title))
-//        {
-//            $postInfo->title = $request->title;
-//
-//        }
-//
-//        if(isset($request->body))
-//        {
-//            $postInfo->body = $request->body;
-//        }
-//        if(isset($request->labelGenre))
-//        {
-//            $postInfo->labelGenre = $request->labelGenre;
-//        }
-//        if(isset($request->id))
-//        {
-//            $postInfo->id = $request->id;
-//        }
-
         $postInfo->save();
 
         if(isset($request->editForm))
@@ -231,8 +218,17 @@ class PostController extends Controller
      */
     public function destroy(post $post)
     {
+
         $postInfo = Post::where('id', $post->id)->first();
-        $postInfo->delete();
+
+        $userComments = Comment::where('postID', $post->id)->get();
+
+        foreach($userComments as $userComment)
+        {
+            $userComment->delete(); //delete comments
+        }
+
+        $postInfo->delete(); //delete post
 
         return redirect()->route('posts.index');
     }

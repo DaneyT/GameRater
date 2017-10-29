@@ -24,11 +24,15 @@
         <div>
             <h2>10 Latest news posts</h2>
 
+            {{--{{ dd(get_defined_vars()['__data']) }}--}}
+
             @foreach($posts as $post)
+
 
                 <div class="well well-lg">
                     <h3>{{ $post->title }}</h3>
                     <p>{{ $post->body }}</p>
+                    <p>Comments on this post: {{ $post->comment}}</p>
                     <a href="{{ route('posts.show', ['id' => $post->id]) }}" class="btn ntn-default pull-right">View Post</a>
                     &nbsp
                 </div>

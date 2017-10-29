@@ -18,19 +18,21 @@ Route::resource('users', 'Auth\UserManagerController');
 
 Route::get('adminPanel/showUsers', 'Auth\UserManagerController@index')->name('showUsers')->middleware('admin'); //->middleware('admin') = voor aalleen admin
 
+Route::post('adminPanel/showUsers', 'Auth\UserManagerController@promote')->name('promoteUser');
+
 //Posts routes
 
 Route::get('/', 'PostController@publicHomePage')->name('publicHomePage');   //main home page
 
 Route::resource('posts', 'PostController');
 
-Route::get('blog/view_gamesFromGenre/{labelGenre}', 'PostController@showGamesPosts')->name('view_gamesFromGenre');
+Route::post('blog/view_gamesFromGenre', 'PostController@showGamesPosts')->name('view_gamesFromGenre');
 
 Route::get('blog/searchPosts', 'PostController@searchPosts')->name('searchPosts');
 
 
 
-Route::get('posts/adminPanel/{post}', 'PostController@switchStatusPost')->name('switchStatusPost');
+Route::post('posts/adminPanel', 'PostController@switchStatusPost')->name('switchStatusPost');
 
 
 

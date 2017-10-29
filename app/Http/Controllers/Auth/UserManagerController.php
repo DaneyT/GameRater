@@ -24,6 +24,29 @@ class UserManagerController extends Controller
      * @param  \App\post  $post
      * @return \Illuminate\Http\Response
      */
+    public function promote(Request $request)
+    {
+
+        $userInfo = User::find($request->id);
+        //dd($userInfo->name);
+        //$postInfo = Post::where('id', $request->id)->first();
+
+        $singlePost = $userInfo;
+        if($request->admin == 1)
+        {
+            $singlePost->admin =0;
+        }
+        else
+        {
+            $singlePost->admin =1;
+        }
+
+
+        $singlePost->save();
+
+        return redirect()->route('showUsers');
+    }
+
     public function destroy(User $user)
     {
 

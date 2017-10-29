@@ -33,7 +33,6 @@ class CommentController extends Controller
 
     public function viewAllGames()
     {
-        //$loggedInUserName = Auth::user()->name;
         $comments = Comment::all();
 
         return view('blog.gameList', ['comments' =>$comments]);
@@ -50,20 +49,20 @@ class CommentController extends Controller
     {
         $comments = new Comment;
 
-        //$commentInfo = Post::where('id', $request->id)->first();
         $comments->postID = $request->postID; //$request->id;
 
         $commentUserName = $request->userName;
         $commentBody =  $request->body;
-        //$commentUserId = Auth::id();
 
-        //$comments->user_ID = $commentUserId;
         $comments->userName= $commentUserName;
         $comments->body = $commentBody;
 
         $comments->save();
-        return redirect()->route('comments.index');
-        //return view('succes!');
+
+        $postdata = Post::where('id', $comments->postID)->first();
+
+        return redirect()->route('posts.show', ['id' => $postdata]);
+
     }
 
 //    /**

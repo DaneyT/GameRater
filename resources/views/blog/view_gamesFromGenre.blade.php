@@ -18,15 +18,16 @@
                 <h3>{{ $posts->title }}</h3>
                 <p>{{ $posts->body }}</p>
                 <p>{{ $posts->labelGenre }}</p>
+                <p>Comments on this game:{{$posts->comment}}</p>
                 <a href="{{ route('posts.show', ['id' => $posts->id]) }}" class="btn ntn-default pull-right">View Post</a>
                 &nbsp
             </div>
 
         @endforeach
 
-        {{--<div class="row text-center">--}}
-            {{--{{ $post->links() }}--}}
-        {{--</div>--}}
+        <div class="row text-center">
+            {{ $post->links() }}
+        </div>
 
 
     </div>

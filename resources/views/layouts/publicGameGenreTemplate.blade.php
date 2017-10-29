@@ -56,19 +56,24 @@ minimum-scale=1.0">
 
     {{--Menu for different post category organisation--}}
     <nav class="navbar navbar-default">
-        <div class="containter-fluid">
 
-            @if(Auth::check())
-                <ul class="nav navbar-nav">
-                    <ul>
-                        <li><a href="{{ route('view_gamesFromGenre', ['labelGenre' => 'rpg']) }}">RPG games</a></li>
-                        <li><a href="{{ route('view_gamesFromGenre', ['labelGenre' => 'strategy']) }}">Strategy games</a></li>
-                        <li><a href="{{ route('view_gamesFromGenre', ['labelGenre' => 'firstpersonshooter']) }}">First person shooter games</a></li>
+        <form action=" {{route('view_gamesFromGenre')}}" method="POST">
 
-                    </ul>
-                </ul>
-            @endif
-        </div>
+            {{ csrf_field() }}
+
+            <div class="form-group">
+                <label for="labelGenre">Genre:</label>
+                <select name="labelGenre">
+                    <option value="rpg" selected>RPG</option>
+                    <option value="strategy">Strategy</option>
+                    <option value="firstpersonshooter">FPS</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{{ route('posts.index') }}" class="btn btn-default pull-right">Go back</a>
+        </form>
+
 
     </nav>
 

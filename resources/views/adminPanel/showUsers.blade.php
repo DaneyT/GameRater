@@ -37,6 +37,7 @@
         <thead>
         <th>Name</th>
         <th>E-mail</th>
+        <th>Admin</th>
         <th>delete</th>
         </thead>
 
@@ -46,12 +47,22 @@
                 <th>{{$user->name}}</th>
                 <td>{{$user->email}}</td>
                 <td>
+                    <form action=" {{route('promoteUser')}}" method="post">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{$user->id}}">
+                        <input type="hidden" name="admin" value="{{$user->admin}}">
+                        <button type="submit" class="btn {{$user->admin ? 'btn-success' : 'btn-warning'}}">{{$user->admin ? 'Actief' : 'Inactief'}}</button>
+
+                    </form>
+                </td>
+                <td>
                     <form action="{{ route('users.destroy', ['id' => $user->id]) }}" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="DELETE">
                         <input class="btn btn-danger" type="submit" value="Delete">
                     </form>
                 </td>
+
             </tr>
         @endforeach
         </tbody>

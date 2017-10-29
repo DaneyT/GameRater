@@ -54,9 +54,15 @@
             <td> {{$post->labelGenre}}</td>
             <td>{{$post->body}}</td>
 
-            <td><a href="{{ route('switchStatusPost', ['id'=>$post->id]) }}" class="btn {{$post->postActive ? 'btn-success' : 'btn-warning'}}">
-                    {{$post->postActive ? 'Actief' : 'Inactief'}}
-                </a></td>
+
+            <td>
+                <form action=" {{route('switchStatusPost')}}" method="POST">
+                    {{ csrf_field() }}
+                <input type="hidden" name="id" value="{{$post->id}}">
+                <input type="hidden" name="postActive" value="{{$post->postActive}}">
+                <button type="submit" class="btn {{$post->postActive ? 'btn-success' : 'btn-warning'}}">{{$post->postActive ? 'Actief' : 'Inactief'}}</button>
+            </form>
+            </td>
 
             <td><a href="{{ route('posts.edit', ['id'=>$post->id]) }}" class="btn btn-info">Edit</a></td>
             <td>

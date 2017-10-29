@@ -21,7 +21,8 @@ class adminMiddleware
         }
         else
         {
-            return redirect('home');
+            return redirect()->route('publicHomePage');
+
         }
     }
 }
